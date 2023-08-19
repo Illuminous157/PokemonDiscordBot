@@ -29,25 +29,13 @@ def run():
 
     @bot.command()
     async def stats(ctx, args):
+        message = ""
         try:
             response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{args}")
             json = response.json()
-
-            hp = json['stats'][0]['base_stat']
-            attack = json['stats'][1]['base_stat']
-            defense = json['stats'][2]['base_stat']
-            special_attack = json['stats'][3]['base_stat']
-            special_defense = json['stats'][4]['base_stat']
-            speed = json['stats'][5]['base_stat']
-
-            await ctx.send(f"Stats for {args}\n"
-                           f"-------------------\n"
-                           f"Attack: {attack}\n"
-                           f"Defense: {defense}\n"
-                           f"Special Attack: {special_attack}\n"
-                           f"Special Defense: {special_defense}\n"
-                           f"Speed: {speed}\n"
-                           f"Hp: {hp}")
+            for stat in json['stats']:
+                message += f"{stat['stat']['name']}: {stat['base_stat']}\n"
+            await ctx.send(message)
         except:
             await ctx.send(f"Unable to locate pokemon '{args}'.")
 
