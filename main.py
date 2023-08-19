@@ -39,6 +39,24 @@ def run():
         except:
             await ctx.send(f"Unable to locate pokemon '{args}'.")
 
+    @bot.command()
+    async def moves(ctx, args):
+        message = ""
+        moves = []
+        try:
+            response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{args}")
+            json = response.json()
+            for move in json['moves']:
+                name = move['move']['name']
+                moves.append(name)
+        except:
+            await ctx.send(f"Unable to locate pokemon '{args}'.")
+        for move in moves:
+            counter = 0
+            message += f"{move}, "
+            counter += 1
+        await ctx.send(message)
+
     bot.run(settings.DISCORD_API_SECRET)
 
 
