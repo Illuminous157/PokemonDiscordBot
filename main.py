@@ -21,7 +21,7 @@ def run():
 
     @bot.command()
     async def love(ctx):
-        await ctx.send("Emily Barton! <3")
+        await ctx.send("Emily Barton! <3 <3 <3 <3 <3")
 
     @bot.command()
     async def favorite(ctx):
@@ -30,11 +30,14 @@ def run():
     @bot.command()
     async def stats(ctx, args):
         message = ""
+        image = ""
         try:
             response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{args}")
             json = response.json()
+            image = json['sprites']["front_default"]
             for stat in json['stats']:
                 message += f"{stat['stat']['name']}: {stat['base_stat']}\n"
+            await ctx.send(image)
             await ctx.send(message)
         except:
             await ctx.send(f"Unable to locate pokemon '{args}'.")
@@ -42,6 +45,7 @@ def run():
     @bot.command()
     async def moves(ctx, args):
         message = ""
+        image = ""
         moves = []
         try:
             response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{args}")
@@ -49,13 +53,14 @@ def run():
             for move in json['moves']:
                 name = move['move']['name']
                 moves.append(name)
+            image = json['sprites']["front_default"]
         except:
             await ctx.send(f"Unable to locate pokemon '{args}'.")
         for move in moves:
-            counter = 0
             message += f"{move}, "
-            counter += 1
+        await ctx.send(image)
         await ctx.send(message)
+
 
     bot.run(settings.DISCORD_API_SECRET)
 
