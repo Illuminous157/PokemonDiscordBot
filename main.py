@@ -21,7 +21,7 @@ def run():
 
     @bot.command()
     async def love(ctx):
-        await ctx.send("Emily Barton! <3 <3 <3 <3 <3")
+        await ctx.send("Emily Barton! <3 <3 <3 <3 <3 <3 <3 <3 <3 <3")
 
     @bot.command()
     async def favorite(ctx):
